@@ -16,11 +16,27 @@
 
 // Inclusão das bibliotecas padrão necessárias para entrada/saída, alocação de memória, manipulação de strings e tempo.
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 // --- Constantes Globais ---
 // Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
 
+#define MAX_TERR 20 
+#define MAX_MISSING 100
+#define MAX_STRING 100
+
 // --- Estrutura de Dados ---
 // Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
+
+typedef struct
+{
+    char name[MAX_TERR];
+    char color[MAX_STRING];
+    int number_army;
+} Army;
+
 
 // --- Protótipos das Funções ---
 // Declarações antecipadas de todas as funções que serão usadas no programa, organizadas por categoria.
@@ -28,6 +44,54 @@
 // Funções de interface com o usuário:
 // Funções de lógica principal do jogo:
 // Função utilitária:
+
+void limpar_tela() {
+    #ifdef _WIN32
+        system("cls"); // Limpa no Windows
+    #else
+        system("clear"); // Limpa no Linux e macOS
+    #endif
+}
+
+Army army[5];
+
+int lenght_army = sizeof(army) / sizeof(army)[0];
+
+void create_armys() {
+    char name[MAX_TERR];
+    char color[MAX_STRING];
+    int number;
+
+    for (int i = 0; i < 5; i++)
+    {
+
+        printf("--- CRIAÇÃO DE EXÉRCITOS. ---\n");
+        printf("Nome do Exército: \n");
+        scanf("%s", army[i].name);
+
+        printf("Cor do Exército: \n");
+        scanf("%s", army[i].color);
+
+        printf("Número de Tropas: \n");
+        scanf("%i", &army[i].number_army);
+
+        printf("Exército criado com sucesso.\n");
+    }
+}
+
+void print_armys() {
+    limpar_tela();
+    printf("----------LISTA DE TERRITÓRIOS--------\n");
+
+    for (int i = 0; i < lenght_army; i++)
+    {
+        printf("--------------------------------------\n");
+        printf("Território %d\n", (i+1));
+        printf("Nome: %s.\n", army[i].name);
+        printf("Cor do Exército: %s.\n", army[i].color);
+        printf("Número de Tropas: %d.\n", army[i].number_army);
+    }
+}
 
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
@@ -38,6 +102,9 @@ int main() {
     // - Aloca a memória para o mapa do mundo e verifica se a alocação foi bem-sucedida.
     // - Preenche os territórios com seus dados iniciais (tropas, donos, etc.).
     // - Define a cor do jogador e sorteia sua missão secreta.
+    
+    create_armys();
+    print_armys();
 
     // 2. Laço Principal do Jogo (Game Loop):
     // - Roda em um loop 'do-while' que continua até o jogador sair (opção 0) ou vencer.
